@@ -1,6 +1,7 @@
 #include <math.h>
 #include "c_speech_features.h"
-
+#include <stdlib.h>
+#include <arm_math.h>
 
 #define MAX(x,y) ((x) > (y) ? (x) : (y))
 #define MIN(x,y) ((x) < (y) ? (x) : (y))
@@ -452,7 +453,7 @@ csf_magspec(const csf_float* aFrames, int aNFrames, int aNFFT)
   arm_rfft_fast_init_f32(&S, aNFFT);
   
   csf_float* mspec = (csf_float*)malloc(sizeof(csf_float) * aNFrames * fft_out);
-  kiss_fft_cpx* out = (kiss_fft_cpx*)malloc(sizeof(csf_float) * 2 * fft_out);
+  csf_float* out = (csf_float*)malloc(sizeof(csf_float) * 2 * fft_out);
 
   for (i = 0, idx = 0; i < aNFrames; i++) {
     // Compute the magnitude spectrum   
